@@ -1,0 +1,59 @@
+#dfs + memorization
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        memo = {}
+        def dfs(nums,index, summary):
+            if index == len(nums):
+                if summary == S:
+                    memo[(index, summary)] = 1
+                else:
+                    memo[(index, summary)] = 0
+            if (index, summary) not in memo:
+                memo[(index, summary)] = dfs(nums, index+1, summary + nums[index]) + dfs(nums, index+1, summary - nums[index])
+            return memo[(index, summary)]
+        dfs(nums,0,0)
+        return memo[(0,0)]
+"""
+from top to bottom
+time: O(2^n)
+space:O(n)
+"""
+#dp[i][j] = dp[i - 1][j - nums[i]] + dp[i - 1][j + nums[j]]
+#dp[k][i] which means the number of ways for first k-th 
+# element to reach a sum i bottom-to-up：use Scrolling array
+class Solution2(object):
+    def findTargetSumWaysDP(self, nums,S):
+        """
+        Build a matrix dp of dimension (n + 1) by (2 * S + 1)
+        Grow matrix dynamically from top to bottom. 
+        Each row is a time step, and we try adding or substracting a number.
+        dp[i][j] denotes number of way to arrive at number j at time step i.
+        
+        j = sum(nums) is set to origin. so by adding or subtracting every number,
+        the range we can reach is from sum(nums) - sum(nums) to sum(nums) + sum(nums) 
+        or 0 ~ 2 * sum(nums), which has 1 + 2 * sum(nums) numbers.
+        
+        We need one extra row (indexed 0) because there is only one way to start at origin.
+        
+        By the last time step, if dp[-1][S] is number of way to sum to zero.
+        dp[-1][S + s] is number of way to sum to s.
+        """
+        s = sum(nums)
+        n, m = len(nums), 2 * s + 1
+        if s < S: return 0
+
+        dp = [[0] * m for _ in range(n + 1)]
+        dp[0][s] = 1
+
+        for i in range(n):
+            for j in range(nums[i], m - nums[i]):
+                if dp[i][j]:
+                    dp[i + 1][j + nums[i]] += dp[i][j]
+                    dp[i + 1][j - nums[i]] += dp[i][j]
+        return dp[-1][s + S] # can also use dp[-1][s - S]
+

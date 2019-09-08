@@ -1,0 +1,30 @@
+class Solution(object):
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.dfs(k, n, 1, [], res)
+        return res
+    def dfs(self, k, n, index, curr, res):
+        if k == 0:
+            if sum(curr) == n:
+                res.append(curr[:])
+                return
+        for i in range(index, 10):
+            if sum(curr) >n:
+                return
+            curr.append(i)
+            #求sum, 所以不用n - i
+            self.dfs(k-1, n, i +1, curr, res)
+            curr.pop()
+"""
+k = 3 n  =7
+[[1,2,4]]
+从9个数中选 kk 个总共有 C9k 个方案，将每个方案记录下来需要 O(k)O(k) 的时间，
+所以时间复杂度是  O(Ck9×k)
+time : O(Ck9×k)
+space: ?真的会考吗呵呵哈哈哈
+"""
