@@ -1,0 +1,27 @@
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        num_sum = sum(nums)
+        if num_sum & 1:
+            return False
+        
+        dp = [False for _ in xrange(1 + num_sum)]
+        dp[0] = True
+        
+        for i in xrange(len(nums)):
+            for j in xrange(num_sum,0,- 1):
+                if dp[j]:  # speed up
+                    continue
+                if j - nums[i] >= 0 and dp[j - nums[i]]:
+                    dp[j] = True
+                    
+            if dp[num_sum / 2]:
+                return True
+        
+        return False
+"""
+dp[i]表示原数组是否可以取出若干个数字，其和为i
+"""

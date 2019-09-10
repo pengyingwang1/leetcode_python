@@ -1,0 +1,17 @@
+class Solution(object):
+    def canAttendMeetings(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: bool
+        """
+        if len(intervals) == 0:return True
+        intervals = sorted(intervals, key = lambda x:x[0])
+        end = intervals[0][1]
+        for interval in intervals[1:]:
+            if interval[0] < end:
+                return False
+            end = interval[1]
+        return True
+"""
+O(Nlogn)
+"""

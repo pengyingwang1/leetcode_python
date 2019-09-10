@@ -1,0 +1,40 @@
+#顺序变
+import collections
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        task_count = collections.Counter(tasks).values()
+        max_task = max(task_count)
+        #重复的元素类型个数 AB__AB__AB__AB
+        mct = task_count.count(max_task)
+        return max(len(tasks), (max_task -1)*(n+1) + mct)
+ #顺序不变，只插 cooling time
+class New_solution(object):
+    def leastInterval1(self, tasks, n):
+        """
+        if cooling time is long and n is small
+        using map
+        """
+        time = 0
+        queue = collections.deque()
+        for c in tasks:
+            if c not in queue:
+                queue.append(c)
+                if len(queue) > n:
+                    queue.popleft()
+            else:
+                while len(queue) <= n:
+                    queue.append('_')
+                    time += 1
+                while queue.popleft() != c:
+                    time += 1
+                    queue.append(c)
+            time += 1
+        return time
+
+
+
