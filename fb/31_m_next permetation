@@ -1,0 +1,30 @@
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        i = n-1
+        if not nums:
+            return None
+        #[5,1,1] 从后往前找 nums[i-1] = nums[i] 也成立
+        while i > 0 and nums[i-1] >= nums[i]:
+            i -= 1
+        self.reverse(nums, i, n-1)
+        if i > 0:
+            for j in range(i, n):
+                if nums[j] > nums[i-1]:
+                    nums[j], nums[i-1] = nums[i-1], nums[j]
+                    break
+    def reverse(self, nums, i , j):
+        for k in range(i, (i+j)/2 +1):
+            nums[k], nums[i+j-k] = nums[i+j-k], nums[k]
+        return nums
+            
+    """
+    1. from back to front to find the first position which is decreasing order
+    2. reverse that part form this position to the end
+    3. find the first one which is larger than this, swap
+    [1 2 4 3 1] -> [1 2 1 3 4] -> [1 3 1 2 4]
+    """

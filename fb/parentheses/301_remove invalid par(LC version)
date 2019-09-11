@@ -1,0 +1,45 @@
+"""
+return all possible values(BFS)
+level order traversal
+1. when check parantenthes , count <0 return False ')('
+2. using isStop to get all result , don't return when get only one result
+3. there are other char other than ')' '(', so add if to judge
+Time: O(2^n) every char have use/remove two option
+Space O(n^2)
+返回一种去掉isStop
+"""
+class Solution(object):
+    def removeInvalidParenthese(self,s):
+        import collections
+        if not s:
+            return []
+        queue = collections.deque([s])
+        isStop = False
+        visited = set()
+        res = []
+        while queue:
+            node = queue.popleft()
+            if self.check(node):
+                res.append(node)
+                isStop = True
+            if isStop == False:
+                for i in range(len(node)):
+                    if node[i] == '(' or node[i] == ')':
+                        new = node[:i] + node[i+1:]
+                        if new not in visited:
+                            queue.append(new)
+                            visited.add(new)
+        return res
+    def check(self, n):
+        count = 0
+        for i in range(len(n)):
+            if count < 0 :
+                return False
+            if n[i] == '(':
+                count += 1
+            elif n[i] == ')':
+                count -= 1
+        return count == 0
+
+                        
+

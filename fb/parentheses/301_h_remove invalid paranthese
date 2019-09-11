@@ -1,0 +1,23 @@
+"""
+返回最少的， count
+"""
+def removeInvalidParentheses(s):
+    if not s:
+        return []
+    return removeInvalid(s,0, '(', ')')
+
+def removeInvalid(s, start, lc, rc):
+    counter = 0
+    for i in range(start, len(s)):
+        if s[i] == lc:
+            counter += 1
+        elif s[i] == rc:
+            counter -= 1
+        if counter <0:
+            return removeInvalid(s[0:i] + s[i+1:],i,lc,rc)
+    str = s[::-1]
+    #防止 ）（）（
+    if lc == '(':
+        return removeInvalid(str,0,rc,lc)
+    else:
+        return str

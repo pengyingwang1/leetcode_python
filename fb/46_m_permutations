@@ -1,0 +1,39 @@
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        BFS
+        """
+        import collections
+        queue = collections.deque()
+        for num in nums:
+            queue.append([num])
+        while len(min(queue, key = len)) < len(nums):
+            temp = queue.popleft()
+            for i in nums:
+                if i in temp:
+                    continue
+                queue.append(temp[:] + [i])
+        return list(queue)
+
+
+"""
+DFS
+"""
+class Solution2(object):
+    def dfspermute(self, nums):
+        self.res = []
+        self.dfs(nums, [])
+        return self.res
+    def dfs(self,nums, temp):
+        if len(temp) == len(nums):
+            #deep copy
+            self.res.append(temp[:])
+            return
+        for num in nums:
+            if num not in temp:
+                temp.append(num)
+                self.dfs(nums,temp)
+                temp.pop()
+                
