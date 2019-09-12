@@ -1,0 +1,18 @@
+"""
+deque.popleft() time O(1)
+list.pop(0) time O(n)
+list.pop()  last one
+"""
+class Solution:
+    def isValid(self, s: str) -> bool:
+        dic = {0:None,'(':')', '[':']','{':'}'}
+        stack = [0]
+        for i in s:
+            if i in dic:
+                stack.append(i)
+            else:
+                #pop last one!!!
+                if dic[stack.pop()] != i:
+                    return False
+        return stack == [0]
+        

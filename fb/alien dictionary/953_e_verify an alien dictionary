@@ -1,0 +1,37 @@
+class Solution(object):
+	def isAlienSorted(self, words: List[str], order: str) -> bool:
+        """
+        O(m*n) space O(m*n)
+        """
+		# nested list comprehension gives indexes of particular chars in Alien Dict
+		word_dic = [[order.index(char) for char in list(word)] for word in words]
+        while len(word_dic) >1:
+            for i in range(len(word_dic[0])):
+                if word_dic[0][i] > word_dic[1][i]:
+                    return False
+                elif word_dic[0][i] < word_dic[1][i]:
+                    word_dic = word_dic[1:]
+                    break
+                if i == len(word_dic[0]) -1:
+                    word_dic = word_dic[1:]
+                elif i == len(word_dic[1]) -1:
+                    return False
+        return True
+    
+
+    def anotherhash(self, words: List[str], order: str) -> bool:
+        hashmap = {}
+        for i in range(len(order)):
+            hashmap[order[i]] = i
+        for i in range(len(words)-1):
+            word1, word2 = words[i], words[i+1]
+            if len(word1) > len(word2) and word1[:len(word2)] == word2:
+                return False
+            for j in range(min(len(word1), len(word2))):
+                if word1[j] != word2[j]:
+                    if hashmap[word1[j]] > hashmap[word2[j]]:
+                        return False
+                    #if not , must break
+                    break
+        return True
+
