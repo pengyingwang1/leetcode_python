@@ -1,0 +1,30 @@
+"""
+1.maxLen 存最长para
+2.maxCurr 目前遍历到的长度
+3.curr count for left right
+if curr > 0: 继续找右 maxcurr 不变
+if curr < 0: 右括号多， maxcurr 清0
+"""
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        if not s:
+            return 0
+        return max(self.recurse(s,'(') , self.recurse(s[::-1],')'))
+    def recurse(self, s, par):
+        maxlen, maxcurr, curr = 0,0,0
+        for i in range(len(s)):
+            if s[i] == par:
+                curr += 1
+            else:
+                curr -= 1
+            maxcurr += 1
+            if curr == 0:
+                maxlen = max(maxlen, maxcurr)
+            elif curr < 0:
+                maxcurr = 0
+                curr = 0
+        return maxlen 
+"""
+time O(n)
+space O(1)
+"""

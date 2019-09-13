@@ -1,0 +1,21 @@
+"""
+DFS 每次遍历判断叉是否合法
+l < n
+r < l
+Time complexity: O(2^n), space complexity: O(2^n)
+"""
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        if not n:
+            return []
+        return self.dfs(n,n,[],"")
+    def dfs(self, left, right, res, str):
+        if left == right == 0:
+            res.append(str)
+        #defualt 添加左括号
+        if left >0:
+            self.dfs(left -1, right, res, str + '(')
+        #右括号小于左括号
+        if right > left:
+            self.dfs(left, right -1, res, str + ')')
+        return res

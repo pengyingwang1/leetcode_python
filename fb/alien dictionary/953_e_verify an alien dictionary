@@ -1,8 +1,5 @@
 class Solution(object):
-	def isAlienSorted(self, words: List[str], order: str) -> bool:
-        """
-        O(m*n) space O(m*n)
-        """
+	def isAlienSorted(self, words, order):
 		# nested list comprehension gives indexes of particular chars in Alien Dict
 		word_dic = [[order.index(char) for char in list(word)] for word in words]
         while len(word_dic) >1:
@@ -17,8 +14,6 @@ class Solution(object):
                 elif i == len(word_dic[1]) -1:
                     return False
         return True
-    
-
     def anotherhash(self, words: List[str], order: str) -> bool:
         hashmap = {}
         for i in range(len(order)):
@@ -34,4 +29,6 @@ class Solution(object):
                     #if not , must break
                     break
         return True
-
+"""
+O(m*n) space O(m*n)
+"""
