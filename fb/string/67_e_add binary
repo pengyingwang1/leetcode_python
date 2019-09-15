@@ -1,0 +1,11 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        i = len(a) -1
+        j = len(b) -1
+        res  = ''
+        plus = 0
+        while i >= 0 or j >= 0 or plus:
+            #prevent index out of bound.
+            plus += int(a[i]) if i >=0 else 0
+            plus += int(b[j]) if j >= 0 else 0
+            res = str(plus%2) + res
