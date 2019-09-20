@@ -1,0 +1,59 @@
+"""
+为了找到重复的id，以email 为 key，id为value构建hash table。（ID的目的，第一是唯一区分每个account的标志，第二是用来找名字）
+用union find 将处于同一个email 下的id union到一起
+把每组union到一起的emails 放到一个set去重
+最后一部分程序是build answer的。
+"""
+class Solution:
+    """
+    @param accounts: List[List[str]]
+    @return: return a List[List[str]]
+    """
+    def accountsMerge(self, accounts):
+        fathers = {}
+        for i in range(len(accounts)):
+            fathers[i] = i
+            
+        # step1: map email to id  
+        email_dict = {} #key: email, value: list of ids
+        for i,account in enumerate(accounts):
+            for email in account[1:]:
+                if email not in email_dict:
+                    email_dict[email] = []
+                email_dict[email].append(i)
+    
+        # step2: union the ids which are same person
+        for email in email_dict:
+            ids = email_dict[email]
+            id0 = ids[0]
+            for id in ids[1:]:
+                self.union(id0,id,fathers)
+                
+        # step3: map id to email        
+        id_dict = {} # key: id, value: set of emails
+        for i,account in enumerate(accounts):
+            root = self.find(i,fathers)
+            if root not in id_dict:
+                id_dict[root] = set()
+            for email in account[1:]:
+                id_dict[root].add(email)
+                
+        # step4: build answer
+        ans = []
+        for id in id_dict:
+            emails = list(id_dict[id])
+            emails.sort()
+            ans.append([accounts[id][0]] + emails)
+        return ans
+    
+    def union(self,a,b,fa):
+        fa[self.find(b,fa)] = self.find(a,fa)
+        
+    def find(self,a,fa):
+        q = []
+        while fa[a] != a:
+            q.append(a)
+            a = fa[a]
+        for temp in q:
+            fa[temp] = a
+        return a

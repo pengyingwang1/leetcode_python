@@ -1,0 +1,19 @@
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        prefix = 0
+        if not nums:
+            return True
+        dic = {0:-1}
+        for i in range(len(nums)):
+            prefix += nums[i]
+            if k != 0:
+                m = prefix%k
+            else:
+                m = prefix
+            if m not in dic:
+                dic[m] = i
+            else:
+                #长度大于2
+                if i - dic[m] > 1:
+                    return True
+        return False

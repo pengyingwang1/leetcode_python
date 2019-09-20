@@ -1,0 +1,27 @@
+"""
+无sort最大和
+[1,1,2,2,2,2,2,3,3] 返回 10
+[1,1,2,2,2,2,2,3,3, 4] 返回 14
+dic = {(1,2), (2,10), (3, 6)}
+"""
+class Solution(object):
+    def unsortMax(self, nums):
+        dic = collections.OrderdDict()
+        for i in range(len(nums)):
+            dic[nums[i]] = dic.get(nums[i],0) + nums[i]
+        dp1 = [0] * (len(dic) + 1) // include ith
+        dp2 = [0] * (len(dic) + 1) // exclude ith
+        i = 1
+        prenum = -1
+        for key, value in dic.items():
+            if (key - prenum) > 1:
+                dp1[i] = sum + max(dp2[i-1],dp1[i-1])
+            else:
+                dp1[i] = sum + dp2[i-1]
+            dp2[i] = max(dp2[i-1],dp[i-1])
+            prenum += 1
+        return max(dp1[len(dic)], dp2[len(dic)])
+
+
+
+
