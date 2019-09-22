@@ -1,0 +1,20 @@
+class Solution:
+    def isOneEditDistance(self, s: str, t: str) -> bool:
+        #1.equal or diff > 1 return false
+        #2. number of s[i] != t[i] > 1 return false
+        #3. delete one situation 
+        # time O(n)
+        #space O(1)
+        diff = abs(len(s) - len(t))
+        if diff > 1 or s == t:
+            return False
+        #replace, check diff num
+        if diff == 0:
+            return sum(s[i] != t[i] for i in range(len(s))) == 1
+        #delete or insert, make sure t is longer
+        if len(s) > len(t):
+            s,t = t,s
+        for i in range(len(s)):
+            if s[i] != t[i]:
+                return s[i:] == t[i+1:]
+        return True

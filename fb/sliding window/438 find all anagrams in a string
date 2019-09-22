@@ -1,0 +1,20 @@
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+    """
+    O(n)
+    """
+        if not s or not p:
+            return []
+        n = len(p)
+        sdic = collections.Counter(s[:len(p)-1])
+        pdic = collections.Counter(p)
+        res = []
+        for i in range(len(p) -1 ,len(s)):
+            sdic[s[i]] += 1
+            if sdic == pdic:
+                res.append(i-(n-1))
+            sdic[s[i-n+1]] -= 1
+            if sdic[s[i-n+1]] == 0:
+                del sdic[s[i-n+1]]
+        return res
+            

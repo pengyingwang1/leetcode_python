@@ -1,0 +1,31 @@
+class Solution:
+    def alienOrder(self, words: List[str]) -> str:
+        """
+        time:
+        O(V + E)
+        space:
+        O(V + E)
+        """
+        indegree = {ch:0 for word in words for ch in word}
+        neighbor = {ch:[] for word in words for ch in word}
+        for pos in range(len(words)-1):
+            for i in range(min(len(words[pos]), len(words[pos+1]))):
+                pre, nxt = words[pos][i], words[pos+1][i]
+                if pre != nxt:
+                    indegree[nxt] += 1
+                    neighbor[pre].append(nxt)
+                    break
+        heap = [ch for ch in indegree if indegree[ch] == 0]
+        heapq.heapify(heap)
+        order = []
+        while heap:
+            for _ in range(len(heap)):
+                node = heapq.heappop(heap)
+                order.append(node)
+                for i in neighbor[node]:
+                    indegree[i] -= 1
+                    if indegree[i] == 0:
+                        heapq.heappush(heap,i)
+        if len(indegree) != len(order):
+            return ''
+        return ''.join(order)

@@ -1,0 +1,25 @@
+class Solution:
+    def isNumber(self, s: str) -> bool:
+        dot = False
+        met_e = False
+        digit = False
+        s = s.strip()
+        for i in range(len(s)):
+            if s[i] in ['+','-']:
+                if i != 0 and s[i-1] != 'e':
+                    return False
+            elif s[i] == '.':
+                #之前不能有e
+                if dot or met_e:
+                    return False
+                dot = True
+            elif s[i] == 'e':
+                if met_e or not digit:
+                    return False
+                met_e = True
+                digit = False
+            elif s[i].isdigit():
+                digit = True
+            else:
+                return False
+        return digit

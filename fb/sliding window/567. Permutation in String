@@ -1,0 +1,13 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        dic1 = collections.Counter(s1)
+        dic2 = collections.Counter(s2[:len(s1)-1])
+        n = len(s1)
+        for i in range(len(s1)-1,len(s2)):
+            dic2[s2[i]] += 1
+            if dic1 == dic2:
+                return True
+            dic2[s2[i-n+1]] -= 1
+            if dic2[s2[i-n+1]] == 0:
+                del dic2[s2[i-n+1]]
+        return False
