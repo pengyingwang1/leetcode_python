@@ -1,0 +1,23 @@
+class Solution(object):
+    def addStrings(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        m = len(num1) - 1
+        n = len(num2) - 1
+        plus = 0
+        ans = ""
+        if not num1 and not num2:
+            return ""
+        while m >= 0 or n >= 0 or plus:
+            if m >= 0:
+                plus += int(num1[m])
+            if n >= 0:
+                plus += int(num2[n])
+            ans = str(plus % 10) + ans
+            m -= 1
+            n -= 1
+            plus = plus // 10
+        return ans

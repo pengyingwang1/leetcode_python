@@ -1,0 +1,25 @@
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        O(n)
+        O(n)
+        """
+        if not height:
+            return 0
+        cur_max = -sys.maxsize
+        left_max = []
+        for h in height:
+            cur_max = max(h, cur_max)
+            left_max.append(cur_max)
+        cur_max = -sys.maxsize
+        right_max = []
+        for h in reversed(height):
+            cur_max = max(h, cur_max)
+            right_max.append(cur_max)
+        right_max = right_max[::-1]
+        water = 0
+        for i in range(len(height)):
+            water += min(left_max[i], right_max[i]) - height[i]
+        return water

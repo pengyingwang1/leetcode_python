@@ -1,0 +1,26 @@
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, neighbors):
+        self.val = val
+        self.neighbors = neighbors
+    O(n)
+"""
+class Solution(object):
+    def __init__(self):
+        self.dict = {}
+    def cloneGraph(self, node):
+        """
+        :type node: Node
+        :rtype: Node
+        """
+        if not node:
+            return None
+        if node.val in self.dict:
+            return self.dict[node.val]
+        root = Node(node.val, [])
+        self.dict[node.val] = root
+        for item in node.neighbors:
+            root.neighbors.append(self.cloneGraph(item))
+        return root
+        
