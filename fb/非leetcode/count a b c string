@@ -1,0 +1,22 @@
+def count(dp,n,bcount,ccount):
+    if (bcount < 0 or ccount < 0):
+        return 0
+    if n == 0:
+        return 1
+    if (bcount == 0 and ccount == 0):
+        return 1
+    if dp[n][bcount][ccount] != -1:
+        return dp[n][bcount][ccount]
+    res  = count(dp, n-1, bcount, ccount)
+    res += count(dp,n-1, bcount-1, ccount)
+    res += count(dp,n-1, bcount, ccount-1)
+    #res = dp[n][bcount][ccount]
+    return res
+def permutation(n):
+    dp = [[[_ for _ in range(3)] for _ in range(2)] for k in range(n+1)]
+    for i in range(n+1):
+        for j in range(2):
+            for k in range(3):
+                dp[i][j][k] = -1
+    return count(dp, 3, 1, 2)
+print( permutation(3))

@@ -15,3 +15,15 @@ class Solution(object):
             else:
                 res.append(interval)
         return res
+     
+    def findintersection(self, intervals):
+        if len(intervals) == 0:
+            return []
+        intervals = sorted(intervals, key = lambda x:x[0])
+        res = [intervals[0]]
+        for interval in intervals[1:]:
+            if interval[0] <= res[-1][1]:
+                res[-1][0] = max(interval[0], res[-1][0])
+                res[-1][1] = min(interval[1], res[-1][0])
+            else:
+                

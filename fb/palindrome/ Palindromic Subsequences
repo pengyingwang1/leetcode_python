@@ -1,0 +1,11 @@
+def subpalindrome(s):
+    """
+    O(2^n)
+    """
+    subs = set()
+    for i in range(len(s)):
+        sub = s[:i] + s[i+1:]
+        if sub and sub == sub[::-1] and sub not in subs:
+            subs.add(sub)
+        subs |= set(subpalindrome(sub))
+    return list(subs)

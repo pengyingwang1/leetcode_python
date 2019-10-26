@@ -1,0 +1,22 @@
+"""
+O(N logK) N : 所有元素个数
+"""
+import heapq
+def mergeKSortedArray(self, arrays):
+    if not arrays:
+        return []
+    heap = []
+    res = []
+    heapq.heapify(heap)
+    for i, array in enumerate(arrays):
+        if len(array) == 0:
+            continue
+        heapq.heappush(heap, (array[0], i, 0))
+    while heap:
+        val, x,y = heapq.heappop(heap)
+        res.append(val)
+        if y + 1 < len(array[x]):
+            heapq.heappush(heap, (arrays[x][y+1], x, y+1))
+    return res
+
+

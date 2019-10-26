@@ -1,0 +1,28 @@
+def remove(s):
+    """
+    O(n) time
+    O(1) space
+    """
+    s = list(s)
+    # remove )
+    countL = 0
+    for i , c in enumerate(s):
+        if c == ')':
+            if not countL:
+                s[i] = ""
+            else:
+                countL -= 1
+        elif c == '(':
+            countL += 1
+    # remove (
+    countR = 0
+    for i in range(len(s)-1,-1,-1):
+        if c == '(':
+            if not countR:
+                s[i] = ""
+            else:
+                countR -= 1
+        elif c == ')':
+            countR += 1
+    return "".join(s)
+

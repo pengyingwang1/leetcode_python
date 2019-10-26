@@ -1,0 +1,26 @@
+def leftmost(self, matrix):
+    if not matrix or not matrix[0]:
+        return 0
+    m = len(matrix)
+    n = len(matrix[0]) 
+    minlen = len(matrix) - 1
+    for i in range(m):
+        #第 m 行最左的
+        index = self.binarySearch(matrix[i])
+        minlen = min(index, minlen)
+    return minlen
+def binarySearch(self, lst):
+    left = 0
+    right = len(lst)-1
+    while left  < right:
+        mid = (left+right)//2
+        if lst[mid] == 1:
+            right = mid -1
+        else:
+            left = mid
+    return left
+matrix = [[0, 0, 0, 1],
+ [0, 0, 1, 1],
+ [0, 1, 1, 1],
+ [0, 0, 0, 0]]
+res = self.leftmost(matrix)

@@ -1,0 +1,21 @@
+def generate_patterns(data, digits):
+# time 
+    if not data or not digits:
+        return []
+    res = []
+    def dfs(output, instr):
+        if instr == '':
+            res.append(output)
+        for i in range(1, len(instr)+1):
+            key = instr[:i]
+            if key in data:
+                for item in data[key]:
+                    dfs(output + item, instr[i:])
+    dfs('', digits)
+    return res
+                    
+data = {'1' : ['A', 'B', 'C'], 
+'2' : ['D', 'E'],
+'12' : ['X'],
+'3' : ['P', 'Q']}
+print(generate_patterns(data, '123'))
