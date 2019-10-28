@@ -21,3 +21,28 @@ def removeInvalid(s, start, lc, rc):
         return removeInvalid(str,0,rc,lc)
     else:
         return str
+    """
+    def Remove(s):
+    s = list(s)
+    countL = 0
+    for index, c in enumerate(s):
+        if c == ')':
+            if not countL:
+                s[index] = ""
+            else:
+                countL -= 1
+        elif c == '(':
+            countL += 1
+    countR = 0
+    for i in range(len(s)-1,-1,-1):
+        c = s[i]
+        if c == '(':
+            if not countR:
+                s[i] = ""
+            else:
+                countR -= 1
+        elif c == ')':
+            countR += 1
+    return ''.join(s)
+
+    """
