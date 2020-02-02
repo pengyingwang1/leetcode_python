@@ -1,0 +1,17 @@
+class Solution(object):
+    def getFactors(self, n):
+        """
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        if n <= 1:
+            return []
+        res = []
+        def dfs(n, start, subset, res):
+            while start * start <= n:
+                if n % start == 0:
+                    res.append(subset + [start, n // start])
+                    dfs(n//start, start, subset+[start], res)
+                start += 1
+        dfs(n, 2, [], res)
+        return res

@@ -1,0 +1,19 @@
+class WordDistance(object):
+
+    def __init__(self, words):
+        """
+        :type words: List[str]
+        """
+        self.wordmap = collections.defaultdict(list)
+        for i in range(len(words)):
+            self.wordmap[words[i]].append(i)
+
+    def shortest(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        if word1 in self.wordmap and word2 in self.wordmap:
+            dis = min([abs(i-j) for i in self.wordmap[word1] for j in self.wordmap[word2]])
+        return dis

@@ -1,0 +1,32 @@
+class Solution(object):
+    import heapq
+    def closestKValues(self, root, target, k):
+        """
+        :type root: TreeNode
+        :type target: float
+        :type k: int
+        :rtype: List[int]
+        time cp: O(n)
+        """
+        def dfs(root, target, heap):
+            if root is None:
+                return
+            dfs(root.left, target, heap)
+            heapq.heappush(heap, (abs(root.val - target), root.val))
+            dfs(root.right, target, heap)
+        if not root:
+            return None
+        heap = []
+        dfs(root, target, heap)
+        res = []
+        while k:
+            res.append(heapq.heappop(heap)[1])
+            k -= 1
+        return res
+    def closestKValues2(self, root, target, k):
+        if not root:
+            return None
+        prestack = []
+        nextstack = []
+        while k:
+                    
